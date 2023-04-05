@@ -1,39 +1,41 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Stack;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         boolean err = false;
 
         int n = Integer.parseInt(br.readLine());
 
-        Stack<Integer> stack = new Stack<>();
-
-        int temp = 1;
-        for(int i = 0; i < n; i++) {
-            int num = Integer.parseInt(br.readLine());
-
-            for( ; temp <= num ; temp++) {
-                stack.push(temp);
-                sb.append("+").append("\n");
-            }
-
-            if(stack.peek()==num) {
-                stack.pop();
-                sb.append("-").append("\n");
-            }else {
-                err = true;
-            }
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = Integer.parseInt(br.readLine());
         }
 
-        if(err)
+        Deque<Integer> stack = new ArrayDeque<>();
+        int flag = 1;
+
+        for (int num : nums) {
+            if (stack.isEmpty() || num != stack.peek()) {
+                if (!stack.isEmpty() && num < stack.peek()) {
+                    err = true;
+                }
+                while (flag <= num) {
+                    stack.push(flag);
+                    sb.append("+").append("\n");
+                    flag += 1;
+                }
+            }
+            stack.pop();
+            sb.append("-").append("\n");
+        }
+
+        if (err) {
             System.out.println("NO");
-        else
+        } else {
             System.out.println(sb);
+        }
     }
 }
