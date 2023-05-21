@@ -17,14 +17,9 @@ public class Solution {
             stack.push(i);
         }
         
-        int[] answer;
-        if (stack.isEmpty()) {
-            answer = new int[0];
-        } else {
-            answer = stack.stream()
-                .mapToInt(Integer::intValue)
-                .toArray();
-        }
+        int[] answer = stack.stream()
+            .mapToInt(Integer::intValue)
+            .toArray();
         
         return answer;
     }
