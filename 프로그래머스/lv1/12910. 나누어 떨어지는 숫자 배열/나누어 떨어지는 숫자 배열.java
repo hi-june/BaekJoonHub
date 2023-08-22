@@ -7,8 +7,7 @@ class Solution {
             .toArray();
         
         if (answer.length == 0) {
-            int[] noElement = {-1};
-            return noElement;
+            return new int[] {-1};
         }
         
         Arrays.sort(answer);
