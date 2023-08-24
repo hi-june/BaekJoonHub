@@ -4,7 +4,7 @@ import java.util.stream.Collectors;
 
 class Solution {
     public String solution(String[] seoul) {
-        List<String> seoulList = Arrays.stream(seoul).collect(Collectors.toList());
+        List<String> seoulList = Arrays.asList(seoul);
         
         int idx = seoulList.indexOf("Kim");
         
