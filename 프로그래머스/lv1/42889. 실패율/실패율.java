@@ -20,8 +20,11 @@ class Solution {
         
         return ranking.keySet().stream()
                 .sorted((k1, k2) -> {
-                    if (ranking.get(k2).compareTo(ranking.get(k1)) == 0) return k1.compareTo(k2);
-                    return ranking.get(k2).compareTo(ranking.get(k1));})
+                    if (ranking.get(k2).compareTo(ranking.get(k1)) == 0) {
+                        return k1.compareTo(k2);
+                    }
+                    return ranking.get(k2).compareTo(ranking.get(k1));
+                })
                 .mapToInt(Integer::intValue)
                 .toArray();
     }
