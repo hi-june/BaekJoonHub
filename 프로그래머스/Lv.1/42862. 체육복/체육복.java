@@ -3,24 +3,29 @@ import java.util.stream.*;
 
 class Solution {
     public int solution(int n, int[] lost, int[] reserve) {
-        Set<Integer> lostSet = new HashSet<>();
-        Set<Integer> reserveSet = Arrays.stream(reserve)
+        List<Integer> lostSet = new ArrayList<>();// new HashSet<>();
+        List<Integer> reserveSet = Arrays.stream(reserve)
             .boxed()
-            .collect(Collectors.toSet());
+            .collect(Collectors.toList());
 
         for (int i : lost) {
-            if (reserveSet.contains(i)) {
-                reserveSet.remove(i);
+            Integer l = Integer.valueOf(i);
+            if (reserveSet.contains(l)) {
+                reserveSet.remove(l);
             } else {
-                lostSet.add(i);
+                lostSet.add(l);
             }
         }
 
+        Collections.sort(reserveSet);
         for (Integer i : reserveSet) {
-            if (lostSet.contains(i - 1)) {
-                lostSet.remove(i - 1);
-            } else if (lostSet.contains(i + 1)) {
-                lostSet.remove(i + 1);
+            Integer l = i - 1;
+            Integer r = i + 1;
+            
+            if (lostSet.contains(l)) {
+                lostSet.remove(l);
+            } else if (lostSet.contains(r)) {
+                lostSet.remove(r);
             }
         }
 
