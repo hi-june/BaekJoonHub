@@ -1,13 +1,15 @@
 import java.util.*;
 
-class Solution {    
+class Solution { 
+    public static boolean[] visited;
+    
     public int solution(int n, int[][] computers) {
-        boolean[] visited = new boolean[n];
-        int count = 0;
+        visited = new boolean[n];
         
+        int count = 0;
         for (int i = 0; i < n; i++) {
             if (!visited[i]) {
-                visitAll(i, computers, visited);
+                visitAll(i, computers);
                 count++;
             }
         }
@@ -15,18 +17,17 @@ class Solution {
         return count;
     }
     
-    private void visitAll(int computer, int[][] computers, boolean[] visited) {
+    private void visitAll(int startNode, int[][] computers) {
         Stack<Integer> stack = new Stack<>();
-        stack.push(computer);
-        visited[computer] = true;
+        stack.push(startNode);
         
         while (!stack.isEmpty()) {
-            int c = stack.pop();
+            int node = stack.pop();
             
-            for (int adjComputer = 0; adjComputer < computers[c].length; adjComputer++) {
-                if (computers[c][adjComputer] == 1 && !visited[adjComputer]) {
-                    stack.push(adjComputer);
-                    visited[adjComputer] = true;
+            for (int i = 0; i < computers[node].length; i++) {
+                if (!visited[i] && computers[node][i] == 1) {
+                    visited[i] = true;
+                    stack.push(i);
                 }
             }
         }
