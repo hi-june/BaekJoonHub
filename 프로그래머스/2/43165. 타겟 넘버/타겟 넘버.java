@@ -1,9 +1,9 @@
 import java.util.*;
 
-class Solution {
+class Solution {    
     public static class State {
-        public int idx; // 다음에 방문할 인덱스
-        public int acc; // 현재까지 누적 계산값
+        int idx;
+        int acc;
         
         public State(int idx, int acc) {
             this.idx = idx;
@@ -19,9 +19,9 @@ class Solution {
         while (!stack.isEmpty()) {
             State state = stack.pop();
             
-            if (state.idx == numbers.length) {  // numbers를 모두 써서 계산을 완료했을 때
+            if (state.idx == numbers.length) {
                 if (state.acc == target) {
-                    count += 1;
+                    count++;
                 }
                 continue;
             }
