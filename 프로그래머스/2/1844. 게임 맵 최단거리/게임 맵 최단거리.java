@@ -32,6 +32,10 @@ class Solution {
         while (!queue.isEmpty()) {
             Node node = queue.poll();
             int step = maps[node.col][node.row];
+            
+            if (node.col == maxCol - 1 && node.row == maxRow - 1) {
+                return step;
+            }
 
             for (int[] direction : directions) {
                 int newCol = node.col + direction[0];
@@ -47,6 +51,6 @@ class Solution {
             }
         }
 
-        return (maps[maxCol - 1][maxRow - 1] == 1) ? -1 : maps[maxCol - 1][maxRow - 1];
+        return -1;
     }
 }
