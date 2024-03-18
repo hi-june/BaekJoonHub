@@ -24,6 +24,7 @@ class Solution {
             }
         }
 
+        int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         Queue<Node> queue = new LinkedList<>();
         queue.offer(new Node(0, 0));
         visited[0][0] = true;
@@ -32,25 +33,17 @@ class Solution {
             Node node = queue.poll();
             int step = maps[node.col][node.row];
 
-            if (node.row + 1 < maxRow && !visited[node.col][node.row + 1]) {    // 우
-                maps[node.col][node.row + 1] = step + 1;
-                queue.offer(new Node(node.col, node.row + 1));
-                visited[node.col][node.row + 1] = true;
-            }
-            if (node.row - 1 >= 0 && !visited[node.col][node.row - 1]) { // 좌
-                maps[node.col][node.row - 1] = step + 1;
-                queue.offer(new Node(node.col, node.row - 1));
-                visited[node.col][node.row - 1] = true;
-            }
-            if (node.col - 1 >= 0 && !visited[node.col - 1][node.row]) {    // 상
-                maps[node.col - 1][node.row] = step + 1;
-                queue.offer(new Node(node.col - 1, node.row));
-                visited[node.col - 1][node.row] = true;
-            }
-            if (node.col + 1 < maxCol && !visited[node.col + 1][node.row]) {    // 하
-                maps[node.col + 1][node.row] = step + 1;
-                queue.offer(new Node(node.col + 1, node.row));
-                visited[node.col + 1][node.row] = true;
+            for (int[] direction : directions) {
+                int newCol = node.col + direction[0];
+                int newRow = node.row + direction[1];
+
+                if (newCol < 0 || newCol >= maxCol || newRow < 0 || newRow >= maxRow) continue;
+
+                if (visited[newCol][newRow]) continue;
+
+                maps[newCol][newRow] = step + 1;
+                queue.offer(new Node(newCol, newRow));
+                visited[newCol][newRow] = true;
             }
         }
 
