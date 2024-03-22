@@ -1,9 +1,9 @@
 import java.util.*;
 
-class Solution {    
-    public static class State {
-        int idx;
-        int acc;
+class Solution {
+    private static class State {
+        public int idx;
+        public int acc;
         
         public State(int idx, int acc) {
             this.idx = idx;
@@ -23,6 +23,7 @@ class Solution {
                 if (state.acc == target) {
                     count++;
                 }
+                
                 continue;
             }
             
