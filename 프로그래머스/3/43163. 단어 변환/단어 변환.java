@@ -2,12 +2,12 @@ import java.util.*;
 
 class Solution {
     private static class State {
-        public final String word;
-        public final int step;
+        int step;
+        String word;
         
-        private State(String word, int step) {
-            this.word = word;
+        private State(int step, String word) {
             this.step = step;
+            this.word = word;
         }
     }
     
@@ -15,7 +15,7 @@ class Solution {
         boolean[] visited = new boolean[words.length];
         
         Queue<State> queue = new LinkedList<>();
-        queue.offer(new State(begin, 0));
+        queue.offer(new State(0, begin));
         
         while (!queue.isEmpty()) {
             State state = queue.poll();
@@ -25,33 +25,29 @@ class Solution {
             }
             
             for (int i = 0; i < words.length; i++) {
-                String next = words[i];
-                
-                if (!isConvertable(state.word, next)) {
+                if (visited[i] || !check(state.word, words[i])) {
                     continue;
                 }
                 
-                if (visited[i]) {
-                    continue;
-                }
                 
+                queue.offer(new State(state.step + 1, words[i]));
                 visited[i] = true;
-                queue.offer(new State(next, state.step + 1));
+                
             }
         }
         
         return 0;
     }
     
-    private boolean isConvertable(String ori, String comp) {
-        int diffCount = 0;
+    private boolean check(String ori, String comp) {
+        int count = 0;
         
         for (int i = 0; i < ori.length(); i++) {
-            if (!ori.substring(i, i + 1).equals(comp.substring(i, i + 1))) {
-                diffCount++;
+            if (ori.charAt(i) != comp.charAt(i)) {
+                count++;
             }
         }
         
-        return diffCount == 1;
+        return count == 1;
     }
 }
