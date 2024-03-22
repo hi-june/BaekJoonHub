@@ -4,53 +4,52 @@ class Solution {
     private static class Node {
         public int col;
         public int row;
-
+        
         private Node(int col, int row) {
             this.col = col;
             this.row = row;
         }
     }
-
+    
+    /*
+    [
+    [1,0,1,1,1],
+    [1,0,1,0,1],
+    [1,0,1,1,1],
+    [1,1,1,0,1],
+    [0,0,0,0,1]
+    ]
+    */
+    static final int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    
     public int solution(int[][] maps) {
         int maxCol = maps.length;
         int maxRow = maps[0].length;
-        boolean[][] visited = new boolean[maxCol][maxRow];
-
-        for (int i = 0; i < maxCol; i++) {
-            for (int j = 0; j < maxRow; j++) {
-                if (maps[i][j] == 0) {
-                    visited[i][j] = true;
-                }
-            }
-        }
-
-        int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        
         Queue<Node> queue = new LinkedList<>();
         queue.offer(new Node(0, 0));
-        visited[0][0] = true;
-
+        
         while (!queue.isEmpty()) {
             Node node = queue.poll();
-            int step = maps[node.col][node.row];
             
-            if (node.col == maxCol - 1 && node.row == maxRow - 1) {
-                return step;
-            }
-
-            for (int[] direction : directions) {
-                int newCol = node.col + direction[0];
-                int newRow = node.row + direction[1];
-
-                if (newCol < 0 || newCol >= maxCol || newRow < 0 || newRow >= maxRow) continue;
-
-                if (visited[newCol][newRow]) continue;
-
-                maps[newCol][newRow] = step + 1;
+            // 상하좌우 움직임
+            for (int[] d : directions) {
+                int newCol = node.col + d[0];
+                int newRow = node.row + d[1];
+                
+                if (newCol >= maxCol || newCol < 0 || newRow >= maxRow || newRow < 0) {
+                    continue;
+                }
+                
+                if (maps[newCol][newRow] > 1 || maps[newCol][newRow] == 0) {
+                    continue;
+                }
+                
                 queue.offer(new Node(newCol, newRow));
-                visited[newCol][newRow] = true;
+                maps[newCol][newRow] = maps[node.col][node.row] + 1;
             }
         }
-
-        return -1;
+        
+        return (maps[maxCol - 1][maxRow - 1] == 1) ? -1 : maps[maxCol - 1][maxRow - 1];
     }
 }
