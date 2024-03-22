@@ -1,35 +1,58 @@
 import java.util.*;
 
-class Solution { 
-    public static boolean[] visited;
+class Solution {
+    /*
+    [ 
+    [1,1,0],
+    [1,1,0],
+    [0,0,1]
+    ]
+    */
+    
+    private static class Node {
+        public int col;
+        public int row;
+        
+        private Node(int col, int row) {
+            this.col = col;
+            this.row = row;
+        }
+    }
     
     public int solution(int n, int[][] computers) {
-        visited = new boolean[n];
-        
+        boolean[] visited = new boolean[n];
         int count = 0;
+        
         for (int i = 0; i < n; i++) {
             if (!visited[i]) {
-                visitAll(i, computers);
+                // visit all
+                Queue<Integer> queue = new LinkedList<>();
+                
+                queue.offer(i);
+                visited[i] = true;
+                
+                while (!queue.isEmpty()) {
+                    int computer = queue.poll();
+                    
+                    for (int adj = 0; adj < n; adj++) {
+                        if (visited[adj]) {
+                            continue;
+                        }
+                        
+                        if (computers[computer][adj] == 0 || adj == computer) {
+                            continue;
+                        }
+                        
+                        queue.offer(adj);
+                        visited[adj] = true;
+                    }
+                }
+                
+                // count
                 count++;
             }
         }
         
         return count;
-    }
-    
-    private void visitAll(int startNode, int[][] computers) {
-        Stack<Integer> stack = new Stack<>();
-        stack.push(startNode);
-        
-        while (!stack.isEmpty()) {
-            int node = stack.pop();
-            
-            for (int i = 0; i < computers[node].length; i++) {
-                if (!visited[i] && computers[node][i] == 1) {
-                    visited[i] = true;
-                    stack.push(i);
-                }
-            }
-        }
     }
 }
