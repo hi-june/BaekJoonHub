@@ -2,30 +2,17 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] citations) {
-        // 0 1 3 5
-        // Arrays.sort(citations);
+        int len = citations.length;
+        Arrays.sort(citations);
         
-//         int h = 0;
-//         for (int i = 0; i < citations.length; i++) {
-//             if () {
-                
-//             }
-//         }
-        int h = 0;
-        
-        while (h <= 10000) {
-            int H = h;
-            int count = (int)Arrays.stream(citations)
-                .filter(c -> c >= H)
-                .count();
+        for (int h = len; h >= 1; h--) {
+            int targetNum = citations[len - h];
             
-            if (count < h) {
-                return h - 1;
+            if (targetNum >= h) {
+                return h;
             }
-            
-            h++;
         }
         
-        return h;
+        return 0;
     }
 }
