@@ -5,7 +5,6 @@ public class Main {
     private static int[] map;
 
     public static void main(String[] args) throws IOException {
-        // Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
@@ -68,9 +67,9 @@ public class Main {
 
     private static int findRoot(int node) {
         if (map[node] != node) {    // 만약 루트 노드가 아니라면
-            return findRoot(map[node]); // 루트를 찾을 때까지 재귀 호출
+            map[node] = findRoot(map[node]);  // 루트를 찾을 때까지 재귀 호출
         }
 
-        return node;
+        return map[node];
     }
 }
