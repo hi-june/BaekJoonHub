@@ -11,17 +11,12 @@ class Solution {
         }
         
         
-        String halfAnswer = "";
+        StringBuilder halfAnswer = new StringBuilder();
         for (int i = 1; i < count.length; i++) {
-            StringBuilder sb = new StringBuilder();
-            
-            for (int j = 0; j < count[i]; j++) {
-                sb.append(Integer.toString(i));
-            }
-            halfAnswer += sb.toString();
+            halfAnswer.append(Integer.toString(i).repeat(count[i]));
         }
         
-        String[] halfArray = halfAnswer.split("");
+        String[] halfArray = halfAnswer.toString().split("");
         Arrays.sort(halfArray, Comparator.reverseOrder());
         
         return halfAnswer + "0" + String.join("", halfArray);
