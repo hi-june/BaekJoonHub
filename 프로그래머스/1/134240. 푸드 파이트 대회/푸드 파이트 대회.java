@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.stream.*;
 
 class Solution {
     public String solution(int[] food) {
@@ -16,9 +15,6 @@ class Solution {
             halfAnswer.append(Integer.toString(i).repeat(count[i]));
         }
         
-        String[] halfArray = halfAnswer.toString().split("");
-        Arrays.sort(halfArray, Comparator.reverseOrder());
-        
-        return halfAnswer + "0" + String.join("", halfArray);
+        return halfAnswer.toString() + "0" + halfAnswer.reverse().toString();
     }
 }
