@@ -11,7 +11,7 @@ class Solution {
             for (String w : word) {
                 b = b.replace(w, " ");
             }
-            b = b.replace(" ", "");
+            b = b.replace(" ", ""); // "yayae"
             
             if (b.length() == 0) count++;
         }
