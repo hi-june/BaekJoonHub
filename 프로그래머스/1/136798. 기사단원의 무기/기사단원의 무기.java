@@ -8,13 +8,18 @@ class Solution {
         
         // return: 무기점의 주인이 무기를 모두 만들기 위해 필요한 철의 무게
         
-        List<Integer> count = new ArrayList<>();
+        // 약수의 갯수를 구하는 법 == 1 부터 n까지 각 숫자마다 가능한 배수를 증가시키는 방법
+        int[] count = new int[number + 1];
         for (int i = 1; i <= number; i++) {
-            count.add(getYackSoo(i));
+            for (int j = 1; i * j <= number; j++) {
+                count[i * j]++;
+            }
         }
         
         int total = 0;
-        for (int c : count) {
+        for (int i = 1; i < count.length; i++) {
+            int c = count[i];
+            
             if (c > limit) {
                 total += power;
             } else {
@@ -23,23 +28,5 @@ class Solution {
         }
         
         return total;
-    }
-    
-    private static int getYackSoo(int n) {
-        if (n == 1) return 1;
-        
-        int count = 0;
-        int sqrt = (int)Math.sqrt(n);
-        for (int i = 1; i <= sqrt; i++) {
-            if (n % i == 0) {
-                count++;
-            }
-        }
-        
-        if (n != sqrt * sqrt) {
-            return count * 2;
-        }
-        
-        return (count * 2) - 1; // 제곱수인 경우
     }
 }
