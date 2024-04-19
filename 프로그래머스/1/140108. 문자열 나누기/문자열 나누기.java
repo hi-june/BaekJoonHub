@@ -1,6 +1,3 @@
-import java.util.*;
-// import java.util.stream.*;
-
 class Solution {
     public int solution(String s) {
         int strCount = 0;
