@@ -27,15 +27,13 @@ class Solution {
                 String key = target.substring(j, j + 1);
                 
                 if (!alphabetMap.containsKey(key)) {
-                    answer[i] = -1;
+                    count = -1;
                     break;
                 }
                 count += alphabetMap.get(key);
             }
             
-            if (answer[i] != -1) {
-                answer[i] = count;
-            }
+            answer[i] = count;
         }
         
         return answer;
