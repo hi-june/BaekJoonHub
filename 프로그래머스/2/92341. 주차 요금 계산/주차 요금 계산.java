@@ -67,7 +67,8 @@ class Solution {
         }
         
         double target = (double)(minute - defaultT) / t;
-        int val = ((minute - defaultT) % t != 0) ? (int)Math.ceil(target) : (minute - defaultT) / t;
+        // int val = ((minute - defaultT) % t != 0) ? (int)Math.ceil(target) : (minute - defaultT) / t;
+        int val = (int)Math.ceil(target);
         
         return defaultPrice + (val * cost);
     }
