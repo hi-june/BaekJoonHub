@@ -1,26 +1,17 @@
 import java.util.*;
 
 class Solution {
-    private static class Node {
-        public int col;
-        public int row;
+    private int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    
+    private class Node {
+        int col;
+        int row;
         
         private Node(int col, int row) {
             this.col = col;
             this.row = row;
         }
     }
-    
-    /*
-    [
-    [1,0,1,1,1],
-    [1,0,1,0,1],
-    [1,0,1,1,1],
-    [1,1,1,0,1],
-    [0,0,0,0,1]
-    ]
-    */
-    static final int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     
     public int solution(int[][] maps) {
         int maxCol = maps.length;
@@ -32,21 +23,15 @@ class Solution {
         while (!queue.isEmpty()) {
             Node node = queue.poll();
             
-            // 상하좌우 움직임
             for (int[] d : directions) {
-                int newCol = node.col + d[0];
-                int newRow = node.row + d[1];
+                int nCol = node.col + d[0];
+                int nRow = node.row + d[1];
                 
-                if (newCol >= maxCol || newCol < 0 || newRow >= maxRow || newRow < 0) {
-                    continue;
-                }
+                if (nCol < 0 || nCol >= maps.length || nRow < 0 || nRow >= maps[0].length) continue;
+                if (maps[nCol][nRow] == 0 || maps[nCol][nRow] != 1) continue;
                 
-                if (maps[newCol][newRow] > 1 || maps[newCol][newRow] == 0) {
-                    continue;
-                }
-                
-                queue.offer(new Node(newCol, newRow));
-                maps[newCol][newRow] = maps[node.col][node.row] + 1;
+                maps[nCol][nRow] = maps[node.col][node.row] + 1;
+                queue.offer(new Node(nCol, nRow));
             }
         }
         
