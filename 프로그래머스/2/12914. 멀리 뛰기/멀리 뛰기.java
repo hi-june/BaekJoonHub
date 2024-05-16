@@ -15,6 +15,6 @@ class Solution {
     private long jump(int n) {
         if (mem[n] != 0) return mem[n];
         
-        return mem[n] = ((jump(n - 1) % 1234567) + (jump(n - 2) % 1234567)) % 1234567;
+        return mem[n] = (jump(n - 1) + jump(n - 2)) % 1234567;
     }
 }
