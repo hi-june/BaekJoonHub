@@ -1,12 +1,18 @@
 public class Solution {
     public int solution(int n) {
-        int ans = 1;
-		
-        while (n != 1) {
-			if (n % 2 != 0) ans++;
-			n /= 2;
-		}
+
+        return getMinVal(n);
+    }
+    
+    private int getMinVal(int n) {
+        if (n == 1 || n == 2) {
+            return 1;
+        }
         
-        return ans;
+        if (n % 2 == 0) {
+            return getMinVal(n / 2);
+        } else {
+            return getMinVal(n / 2) + 1;
+        }
     }
 }
