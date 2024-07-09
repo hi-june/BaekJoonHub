@@ -1,5 +1,6 @@
 import java.util.*;
 
+// sorting
 class Solution {
     public long solution(int[] weights) {
         long count = 0;
