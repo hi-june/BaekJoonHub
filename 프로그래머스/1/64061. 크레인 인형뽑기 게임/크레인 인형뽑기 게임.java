@@ -1,41 +1,43 @@
 import java.util.*;
 
 class Solution {
-    public int solution(int[][] board, int[] moves) { 
-        int[] pointers = new int[board[0].length];
-        Arrays.fill(pointers, -1);
+    public int solution(int[][] board, int[] moves) {
+        List<Stack<Integer>> map = new ArrayList<>();
 
+        // i = 열
         for (int i = 0; i < board[0].length; i++) {
-            for (int j = 0; j < board.length; j++) {
-                if (board[j][i] != 0) {
-                    pointers[i] = j;
-                    break;
-                }
-            }
-        }
+            Stack<Integer> stack = new Stack<>();
 
-        Stack<Integer> stack = new Stack<>();
+            // j = 행
+            for (int j = board.length - 1; j >= 0; j--) {
+                if (board[j][i] == 0) break;
+
+                stack.push(board[j][i]);
+            }
+
+            map.add(stack);
+        }
 
         int count = 0;
+        Stack<Integer> basket = new Stack<>();
         for (int m : moves) {
-            int idx = m - 1;
+            if (map.get(m - 1).isEmpty()) continue;
 
-            if (pointers[idx] == -1) continue;
+            int block = map.get(m - 1).pop();
 
-            int doll = board[pointers[idx]][idx];
-
-            if (stack.empty()) {
-                stack.push(doll);
-            } else if (stack.peek() != doll) {
-                stack.push(doll);
-            } else {
-                stack.pop();
-                count++;
+            if (basket.isEmpty()) {
+                basket.push(block);
+                continue;
             }
 
-            pointers[idx] = (pointers[idx] + 1 >= board.length) ? -1 : pointers[idx] + 1;
+            if (basket.peek() == block) {
+                basket.pop();
+                count += 2;
+            } else {
+                basket.push(block);
+            }
         }
-        
-        return count * 2;
+
+        return count;
     }
 }
