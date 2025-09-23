@@ -1,67 +1,72 @@
 import java.io.*;
 import java.util.*;
+import java.util.stream.*;
 
 public class Main {
+    public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] inputs = Arrays.stream(br.readLine().split(" "))
+            .mapToInt(Integer::valueOf)
+            .toArray();
 
-        // n, m, v 초기화
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        int v = Integer.parseInt(st.nextToken());
+        int N = inputs[0];  // 노드의 수
+        int M = inputs[1];  // 간선의 수
+        int V = inputs[2];  // 탐색을 시작할 노드의 번호
 
-        // graph 초기화
         List<List<Integer>> graph = new ArrayList<>();
-
-        for (int i = 0; i < n + 1; i++) {
+        for (int i = 0; i < N + 1; i++) {
             graph.add(new ArrayList<>());
         }
 
-        for (int i = 0; i < m; i++) {
-            st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < M; i++) {
+            inputs = Arrays.stream(br.readLine().split(" "))
+                .mapToInt(Integer::valueOf)
+                .toArray();
 
-            int x = Integer.parseInt(st.nextToken());
-            int y = Integer.parseInt(st.nextToken());
+            int f = inputs[0];
+            int t = inputs[1];
 
-            graph.get(x).add(y);
-            graph.get(y).add(x);
+            graph.get(f).add(t);
+            graph.get(t).add(f);
         }
 
-        // 순서 유지를 위한 정렬
         graph.forEach(Collections::sort);
 
-        // DFS
-        boolean[] visitedDFS = new boolean[n + 1];
-        dfs(graph, v, visitedDFS);
+        boolean[] visitedDFS = new boolean[N + 1];
+        dfs(graph, V, visitedDFS);
+        bw.write("\n");
 
-        System.out.println();
-
-        // BFS
+        boolean[] visitedBFS = new boolean[N + 1];
         Queue<Integer> queue = new LinkedList<>();
-        boolean[] visitedBFS = new boolean[n + 1];
 
-        queue.offer(v);
-        visitedBFS[v] = true;
+        queue.offer(V);
+        visitedBFS[V] = true;
 
         while (!queue.isEmpty()) {
-            int visitedNode = queue.poll();
-            System.out.print(visitedNode + " ");
+            int node = queue.poll();
+            bw.write(node + " ");
 
-            for (int node : graph.get(visitedNode)) {
-                if (!visitedBFS[node]) {
-                    queue.offer(node);
-                    visitedBFS[node] = true;
+            for (int adj : graph.get(node)) {
+                if (!visitedBFS[adj]) {
+                    queue.offer(adj);
+                    visitedBFS[adj] = true;
                 }
             }
         }
+
+        bw.flush();
+
+        br.close();
+        bw.close();
     }
 
-    public static void dfs(List<List<Integer>> graph, int v, boolean[] visited) {
-        visited[v] = true;
-        System.out.print(v + " ");
+    public static void dfs(List<List<Integer>> graph, int V, boolean[] visited) throws IOException {
+        visited[V] = true;
+        bw.write(V + " ");
 
-        for (int node : graph.get(v)) {
+        for (int node : graph.get(V)) {
             if (!visited[node]) {
                 dfs(graph, node, visited);
             }
